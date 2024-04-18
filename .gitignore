@@ -170,3 +170,4 @@ weights/*
 *.png
 *.mp4
 *.jpeg
+datasets/*
