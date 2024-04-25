@@ -166,8 +166,4 @@ runs/*
 weights/*
 
 # Inputs
-*.jpg
-*.png
 *.mp4
-*.jpeg
-datasets/*
