@@ -4,8 +4,9 @@ import numpy as np
 from ultralytics import YOLO
 from tqdm import tqdm
 import sys
+import matplotlib.pyplot as plt
 
-        
+
 def color_and_save_with_labels(image_directory, labels_directory, output_directory, color, opacity, classes=None):
     # List all files in the image directory
     image_files = [f for f in os.listdir(image_directory) if f.endswith(('.jpg', '.jpeg', '.png'))]
@@ -13,6 +14,8 @@ def color_and_save_with_labels(image_directory, labels_directory, output_directo
     error_count = 0
     # Initialize list to store error messages
     error_messages = []
+    # Initialize dictionary to store object counts
+    object_counts = {}
     # Initialize the progress bar with the total number of image files
     with tqdm(total=len(image_files), desc="Processing Images", position=0, leave=True) as pbar:
         # Iterate over each image file
@@ -43,20 +46,24 @@ def color_and_save_with_labels(image_directory, labels_directory, output_directo
             for line in lines:
                 parts = line.strip().split(' ')
                 class_index = int(parts[0])
-                points = list(map(float, parts[1:]))
-                # Reshape points into list of tuples [(x1, y1), (x2, y2), ...]
-                points = [(int(points[i] * image.shape[1]), int(points[i + 1] * image.shape[0])) for i in range(0, len(points), 2)]
-                if opacity > 0.0:
-                    # Initialize blank mask image of same dimensions for drawing the shapes
-                    shapes = np.zeros_like(annotated_image, np.uint8)
-                    cv2.fillPoly(shapes, [np.array(points)], color)
-                    # Generate output by blending image with shapes image, using the shapes
-                    # images also as mask to limit the blending to those parts
-                    out = annotated_image
-                    mask = shapes.astype(bool)
-                    out[mask] = cv2.addWeighted(annotated_image, opacity, shapes, 1 - opacity, 0)[mask]
-                else:
-                    cv2.fillPoly(annotated_image, [np.array(points)], color)
+                # Increment object count for this class_index
+                object_counts[class_index] = object_counts.get(class_index, 0) + 1
+                # Check if classes is None or the class_index is in the provided classes list
+                if classes is None or class_index in classes:
+                    points = list(map(float, parts[1:]))
+                    # Reshape points into list of tuples [(x1, y1), (x2, y2), ...]
+                    points = [(int(points[i] * image.shape[1]), int(points[i + 1] * image.shape[0])) for i in range(0, len(points), 2)]
+                    if opacity > 0.0:
+                        # Initialize blank mask image of same dimensions for drawing the shapes
+                        shapes = np.zeros_like(annotated_image, np.uint8)
+                        cv2.fillPoly(shapes, [np.array(points)], color)
+                        # Generate output by blending image with shapes image, using the shapes
+                        # images also as mask to limit the blending to those parts
+                        out = annotated_image
+                        mask = shapes.astype(bool)
+                        out[mask] = cv2.addWeighted(annotated_image, opacity, shapes, 1 - opacity, 0)[mask]
+                    else:
+                        cv2.fillPoly(annotated_image, [np.array(points)], color)
             # Construct the full path to save the annotated image
             output_path = os.path.join(output_directory, image_file)
             # Save the annotated image
@@ -72,6 +79,16 @@ def color_and_save_with_labels(image_directory, labels_directory, output_directo
         print("Encountered the following errors:")
         for error_message in error_messages:
             print(error_message)
+            
+    # Generate and save histogram or bar chart of object counts
+    if object_counts:
+        plt.bar(object_counts.keys(), object_counts.values())
+        plt.xlabel('Class Index')
+        plt.ylabel('Count')
+        plt.title('Object Counts')
+        plt.savefig('object_counts.png')
+        plt.close()
+
 
 def color_and_save(directory, segment_model, color, opacity, classes=None):
     # List all files in the directory

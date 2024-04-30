@@ -127,6 +127,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+envs/
 
 # Spyder project settings
 .spyderproject
@@ -161,9 +162,11 @@ cython_debug/
 
 # Outputs
 runs/*
+wandb/*
 
 # Weights
 weights/*
 
 # Inputs
 *.mp4
+datasets/*
