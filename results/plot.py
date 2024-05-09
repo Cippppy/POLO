@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Read the CSV file into a DataFrame
-df = pd.read_csv('plots/wandb_export_2024-04-29T20_05_40.187-04_00.csv')
+df = pd.read_csv('results/wandb_export_2024-04-29T20_05_40.187-04_00.csv')
 
 # Split the 'Name' column into 'Color' and 'Opacity' based on '_'
 df[['Color', 'Opacity']] = df['Name'].str.split('_', expand=True)
@@ -37,7 +37,7 @@ plt.xlabel('Color', fontsize=25)  # Adjust x-axis label font size
 plt.ylabel('Mean mAP50-95', fontsize=25)  # Adjust y-axis label font size
 # plt.xticks(fontsize=12)  # Adjust font size of x-axis tick labels
 plt.yticks(fontsize=20)  # Adjust font size of y-axis tick labels
-plt.savefig('plots/color_mean_chart.png')
+plt.savefig('results/color_mean_chart.png')
 plt.close()
 
 # Create bar chart for opacities
@@ -49,7 +49,7 @@ plt.xlabel('Opacity', fontsize=25)  # Adjust x-axis label font size
 plt.ylabel('Mean mAP50-95', fontsize=25)  # Adjust y-axis label font size
 plt.xticks(fontsize=20)  # Adjust font size of x-axis tick labels
 plt.yticks(fontsize=20)  # Adjust font size of y-axis tick labels
-plt.savefig('plots/opacity_mean_chart.png')
+plt.savefig('results/opacity_mean_chart.png')
 plt.close()
 
 # Convert mAP50-95 to numeric
@@ -78,5 +78,5 @@ plt.yticks(np.arange(len(pivot_df.index)) - 0.5, pivot_df.index)
 
 # Adding grid lines at the middle of each axis interval
 plt.grid(axis='both', linestyle='-', linewidth=0.7, color='black')
-plt.savefig('plots/heatmap.png')
+plt.savefig('results/heatmap.png')
 plt.close()

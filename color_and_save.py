@@ -8,6 +8,20 @@ import matplotlib.pyplot as plt
 
 
 def color_and_save_with_labels(image_directory, labels_directory, output_directory, color, opacity, classes=None):
+    """
+    Colorize and save images with labeled objects.
+
+    Args:
+        image_directory (str): Directory containing input images.
+        labels_directory (str): Directory containing label files for the images.
+        output_directory (str): Directory to save the annotated images.
+        color (tuple): RGB color tuple (e.g., (0, 255, 255) for yellow).
+        opacity (float): Opacity level for drawing objects (0.0 for fully transparent, 1.0 for opaque).
+        classes (list): List of class indices to include (default is None, includes all classes).
+
+    Returns:
+        None
+    """
     # List all files in the image directory
     image_files = [f for f in os.listdir(image_directory) if f.endswith(('.jpg', '.jpeg', '.png'))]
     # Initialize error count
@@ -91,6 +105,19 @@ def color_and_save_with_labels(image_directory, labels_directory, output_directo
 
 
 def color_and_save(directory, segment_model, color, opacity, classes=None):
+    """
+    Colorize and save images segmented by the provided model.
+
+    Args:
+        directory (str): Directory containing input images.
+        segment_model (object): Segmentation model object.
+        color (tuple): RGB color tuple (e.g., (0, 255, 255) for yellow).
+        opacity (float): Opacity level for drawing objects (0.0 for fully transparent, 1.0 for opaque).
+        classes (list): List of class indices to include (default is None, includes all classes).
+
+    Returns:
+        None
+    """
     # List all files in the directory
     files = os.listdir(directory)
     # Filter only the image files (you can adjust the extensions as needed)
