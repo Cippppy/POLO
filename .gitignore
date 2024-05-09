@@ -169,5 +169,5 @@ weights/*
 
 # Inputs
 *.mp4
-# datasets/*
-datasets\ copy/*
+datasets/detect/*
+datasets/segment/*
