@@ -25,13 +25,14 @@ for color in mean_color.index:
     mean = mean_color[color]
     error = 1.96 * (std_err_color[color] / np.sqrt(len(grouped_by_color.get_group(color))))
     if color == 'Baseline':
-        color = 'Uncolored'
+        color = 'Original'
         # Add a dotted horizontal line at the baseline
-        plt.axhline(y=mean, color='black', linestyle='--')
+        # plt.axhline(y=mean, color='black', linestyle='--')
     plt.errorbar(color.capitalize(), mean, yerr=error, fmt='o', color=color_value, capsize=5)
-plt.title('95% Confidence Interval for Color')
+plt.title('Mean mAP Score by Color with 95% Confidence Interval')
 plt.xlabel('Color')
-plt.ylabel('mAP50_95')
+plt.ylabel('mAP50-95')
+plt.grid(True)
 plt.savefig('color_confidence_interval.png')
 plt.close()
 
@@ -74,8 +75,8 @@ for opacity in mean_opacity.index:
 
 # Plot the confidence intervals for each opacity and save to an image
 # plt.errorbar(mean_opacity.index, mean_opacity, yerr=(ci_opacity[1]-ci_opacity[0])/2, fmt='o', color='r', capsize=5)
-plt.title('95% Confidence Interval for Opacity')
+plt.title('Mean mAP Score by Opacity with 95% Confidence Interval')
 plt.xlabel('Opacity')
-plt.ylabel('mAP50_95')
+plt.ylabel('mAP50-95')
 plt.savefig('opacity_confidence_interval.png')
 plt.close()

@@ -169,4 +169,5 @@ weights/*
 
 # Inputs
 *.mp4
-datasets/*
+# datasets/*
+datasets\ copy/*
