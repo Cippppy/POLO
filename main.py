@@ -13,7 +13,7 @@ if __name__ == '__main__':
     model = YOLO('yolov8n.pt')
     data_path = 'cfg/datasets/detect/val2017.yaml'
     project_name = "POLO11"
-    test_img = "/home/cipoll17/POLO/datasets/detect/val2017/images/000000012639.jpg"
+    test_img = "datasets/detect/val2017/images/000000012639.jpg"
     classes = None
     device = '0'
     # Initialize a new wandb run for each color
@@ -49,7 +49,7 @@ if __name__ == '__main__':
     # Define colors and opacities
     colors = list(colors_dict.values())
     opacities = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
-    test_img = "/home/cipoll17/POLO/datasets/detect/val2017_colored/images/000000012639.jpg"
+    test_img = "datasets/detect/val2017_colored/images/000000012639.jpg"
     # Loop over each color and opacity combination
     for color in colors:
         for opacity in opacities:
