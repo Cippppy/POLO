@@ -36,10 +36,7 @@ if __name__ == '__main__':
     map50 = validation_results.box.map50  # map50
     map75 = validation_results.box.map75  # map75
     map_by_class = validation_results.box.maps.tolist()
-    # df = pd.DataFrame({"class": list(range(80)), "map": map_by_class})
-    # table = wandb.Table(dataframe=df)
     wandb.log({"map50_95": map50_95, "map50": map50, "map75": map75})
-    # wandb.log({"map50_95": map50_95, "map50": map50, "map75": map75, "mAP of 34": map_by_class[34]})
     
     data_path = 'cfg/datasets/detect/colored/val2017-color.yaml'
     # Define directories for images, labels, and output
@@ -51,10 +48,7 @@ if __name__ == '__main__':
     wandb.finish()
     # Define colors and opacities
     colors = list(colors_dict.values())
-    # opacities = [0, 0.2, 0.4, 0.6, 0.8]
     opacities = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]
-    # opacities = [0, 0.25, 0.5, 0.75]
-    # opacities = [0.25]
     test_img = "/home/cipoll17/POLO/datasets/detect/val2017_colored/images/000000012639.jpg"
     # Loop over each color and opacity combination
     for color in colors:
@@ -85,10 +79,7 @@ if __name__ == '__main__':
             map50 = validation_results.box.map50  # map50
             map75 = validation_results.box.map75  # map75
             map_by_class = validation_results.box.maps.tolist()
-            # df = pd.DataFrame({"class": list(range(80)), "map": map_by_class})
-            # table = wandb.Table(dataframe=df)
             wandb.log({"map50_95": map50_95, "map50": map50, "map75": map75})
-                        # wandb.log({"map50_95": map50_95, "map50": map50, "map75": map75, "mAP of 34": map_by_class[34]})
 
             # End the current wandb run
             wandb.finish()
